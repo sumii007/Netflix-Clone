@@ -15,6 +15,36 @@ class PreviewProvider
         if ($entity == null) {
             $entity = $this->getRandomEntity();
         }
+
+        $id = $entity->getId();
+        $name = $entity->getName();
+        $preview = $entity->getPreview();
+        $thumbnail = $entity->getThmubnail();
+
+        return "<div class='previewContainer'>
+        
+        <img src='$thumbnail' class='previewImage' hidden >
+
+        <video autoplay muted class='previewVideo'>
+            <source src='$preview' type='video/mp4'>
+        </video>
+
+        <div class='previewOverlay'>
+            <div class='mainDetails'>
+                <h3>$name</h3>
+
+                <div class='name'>
+
+                    <button><i class='fas fa-play'></i> Play</button>
+                    <button><i class='fas fa-volume-mute'></i></button>
+                
+                </div>
+            </div>
+        </div>
+        
+
+        </div>";
+
     }
 
     private function getRandomEntity()
@@ -22,7 +52,8 @@ class PreviewProvider
         $query = $this->con->prepare("SELECT * FROM entities ORDER BY RAND() LIMIT 1");
         $query->execute();
         $row = $query->fetch(PDO::FETCH_ASSOC);
-        echo $row["name"];
+
+        return new Entity($this->con, $row);
     }
 }
 
