@@ -19,7 +19,7 @@ class PreviewProvider
         $id = $entity->getId();
         $name = $entity->getName();
         $preview = $entity->getPreview();
-        $thumbnail = $entity->getThmubnail();
+        $thumbnail = $entity->getThumbnail();
 
         return "<div class='previewContainer'>
         
@@ -51,7 +51,7 @@ class PreviewProvider
     {
 
         $id = $entity->getId();
-        $thumbnail = $entity->getThmubnail();
+        $thumbnail = $entity->getThumbnail();
         $name = $entity->getName();
 
         return "<a href='entity.php?id=$id'>

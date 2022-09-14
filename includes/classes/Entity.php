@@ -29,7 +29,7 @@ class Entity
         return $this->sqlData["name"];
     }
 
-    public function getThmubnail()
+    public function getThumbnail()
     {
         return $this->sqlData["thumbnail"];
     }
@@ -37,6 +37,11 @@ class Entity
     public function getPreview()
     {
         return $this->sqlData["preview"];
+    }
+
+    public function getCategoryId()
+    {
+        return $this->sqlData["categoryId"];
     }
 
 
