@@ -1,3 +1,9 @@
+$(document).scroll(function () {
+    var isScrolled = $(this).scrollTop() > $(".topBar").height();
+    $(".topBar").toggleClass("scrolled", isScrolled);
+})
+
+
 const volumeToggle = (button) => {
 
     var muted = $(".previewVideo").prop("muted");
@@ -31,6 +37,7 @@ function startHideTimer() {
 
 function initVideo(videoId, username) {
     startHideTimer();
+    setStartTime(videoId, username);
     updateProgressTimer(videoId, username);
 }
 
@@ -69,11 +76,38 @@ function updateProgress(videoId, username, progress) {
 }
 
 function setFinished(videoId, username) {
-    console.log(videoId, username);
     $.post("ajax/setFinished.php", { videoId: videoId, username: username }, function (data) {
         if (data !== null && data !== " ") {
             alert(data);
         }
     })
+}
+
+function setStartTime(videoId, username) {
+    $.post("ajax/getProgress.php", { videoId: videoId, username: username }, function (data) {
+        if (isNaN(data)) {
+            alert(data);
+            return;
+        }
+
+        $("video").on("canplay", function () {
+            this.currentTime = data;
+            $("video").off("canplay")
+        })
+    })
+}
+
+function restartVideo() {
+    $("video")[0].currentTime = 0;
+    $("video")[0].play();
+    $(".upNext").fadeOut();
+}
+
+function watchVideo(videoId) {
+    window.location.href = "watch.php?id=" + videoId;
+}
+
+function showUpNext() {
+    $(".upNext").fadeIn();
 }
 
